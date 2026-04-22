@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 app = FastAPI()
 
@@ -8,6 +8,11 @@ users = []
 # Endpoint untuk menambahkan user
 @app.post("/users")
 def create_user(name: str):
+
+    # validasi input
+    if not name:
+        raise HTTPException(status_code=400, detail="Name is required")
+    
     user = {"id": len(users) + 1, "name": name}
     users.append(user)
     return user
