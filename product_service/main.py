@@ -1,9 +1,15 @@
 from fastapi import FastAPI
+from .routes import router 
 
 app = FastAPI()
 
-products = []
+app.include_router(router)
 
+@app.get("/")
+def home():
+    return {"message": "API aktif"}
+
+products = []
 # Tambah produk
 @app.post("/products")
 def create_product(name: str, price: int):
